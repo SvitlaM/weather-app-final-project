@@ -1,3 +1,26 @@
+function formatDate(timeStamp) {
+  let date = new Date(timeStamp);
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  let days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  let day = days[date.getDate()];
+  return `${day} ${hours}:${minutes}`;
+}
 function displayTemperature(response) {
   console.log(description);
   let temperatureElement = document.querySelector("#temperature");
@@ -5,14 +28,17 @@ function displayTemperature(response) {
   let descriptionElement = document.querySelector("#description");
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
+  let dateElement = document.querySelector("#date");
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
   descriptionElement.innerHTML = response.data.weather[0].description;
   humidityElement.innerHTML = response.data.main.humidity;
-  windElement.innerHTML = Math.weather(response.data.wind.speed);
+  windElement.innerHTML = Math.round(response.data.wind.speed);
+  dateElement.innerHTML = formatDate(response.data.dt * 1000);
 }
-let apiKey = "10bfb38d79332b9c1c11786c4a08cfd1";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=New York&appid=${apiKey}&units=metric`;
 
-console.log(apiUrl);
+let apiKey = "10bfb38d79332b9c1c11786c4a08cfd1";
+let city = "Paris";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
 axios.get(apiUrl).then(displayTemperature);
