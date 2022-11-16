@@ -10,17 +10,21 @@ function formatDate(timeStamp) {
   }
 
   let days = [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
-  let day = days[date.getDate()];
+
+  let day = days[date.getDay()];
+
+  console.log(date.getDay());
   return `${day} ${hours}:${minutes}`;
 }
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
